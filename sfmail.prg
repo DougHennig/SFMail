@@ -29,7 +29,7 @@ endwith
 * Class:			SFMail
 * Purpose:			Wrapper to send email via MAPI or SMTP
 * Author:			Doug Hennig
-* Last revision:	02/03/2021
+* Last revision:	03/22/2021
 *==============================================================================
 
 define class SFMail as Custom
@@ -56,7 +56,7 @@ define class SFMail as Custom
 * Method:			SendMail
 * Purpose:			Sends the email
 * Author:			Doug Hennig
-* Last revision:	11/16/2010
+* Last revision:	03/22/2021
 * Parameters:		none
 * Returns:			.T. if the message was sent
 * Environment in:	the properties are set for emailing
@@ -65,6 +65,7 @@ define class SFMail as Custom
 		
 	procedure SendMail
 		local llReturn
+		This.cErrorMessage = ''
 		if This.lUseMAPI
 			llReturn = This.SendMailMAPI()
 		else
