@@ -89,11 +89,6 @@ namespace SMTPLibrary2
         public int Timeout { get; set; }
 
         /// <summary>
-        /// The text of any error that occurred.
-        /// </summary>
-        public string ErrorMessage { get; private set; }
-
-        /// <summary>
         /// The name of a log file to write to.
         /// </summary>
         public string LogFile { get; set; }

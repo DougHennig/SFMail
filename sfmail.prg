@@ -29,7 +29,7 @@ endwith
 * Class:			SFMail
 * Purpose:			Wrapper to send email via MAPI or SMTP
 * Author:			Doug Hennig
-* Last revision:	03/22/2021
+* Last revision:	02/24/2022
 *==============================================================================
 
 define class SFMail as Custom
@@ -164,7 +164,7 @@ define class SFMail as Custom
 * Method:			SendMailSMTP
 * Purpose:			Sends the email using SMTP
 * Author:			Doug Hennig
-* Last revision:	12/03/2020
+* Last revision:	02/24/2022
 * Parameters:		none
 * Returns:			.T. if the message was sent
 * Environment in:	the properties are set for emailing
@@ -231,12 +231,12 @@ define class SFMail as Custom
 							laAttachments[lnI])
 					next lnI
 
-* Sent the email and grab the error message if it failed.
+* Send the email.
 
-					llReturn = loMail.SendMail()
-					if not llReturn
-						.cErrorMessage = loMail.ErrorMessage
-					endif not llReturn
+					loMail.SendMail()
+
+* Grab the error message if it failed.
+
 				else
 					.cErrorMessage = loBridge.cErrorMsg
 				endif empty(loBridge.cErrorMsg)
