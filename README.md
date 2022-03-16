@@ -50,6 +50,14 @@ The class supports the following:
 
 * Diagnostic logging
 
+## Modern Authentication
+
+Basic Authentication is simply providing a user name and password to connect to a mail server. More and more mail services are moving away from Basic Authentication and implementing Modern Authentication, also known as OAuth2. Modern Authentication uses a two-step process to connect to a mail server: first obtaining a token (a string) from a web server, then using that token to connect to the mail server.
+
+SFMail supports Modern Authentication through the cOAuth* properties. Simply set them to the appropriate values and SFMail takes care of both steps for you.
+
+<a href="ModernAuth/Office365.md" target="_blank">Office365.md</a> has instructions for configuring Office 365 and getting the values you need for Modern Authentication.
+
 ## Properties
 
 * cAttachments: A comma-comma-separated list of attachments for the email.
@@ -88,6 +96,14 @@ The class supports the following:
 
 * nTimeout: The email timeout in seconds (SMTP only). The default is 30.
 
+* cOAuthURL: The URL to obtain an OAuth 2.0 token.
+
+* cOAuthClientID: The OAuth2 Client ID.
+
+* cOAuthClientSecret: The OAuth2 Client Secret.
+
+* cOAuthScope: The OAuth2 scope. For Microsoft 365, use https://outlook.office.com/SMTP.Send.
+
 ## Using SFMail
 
 To use SFMail, instantiate the SFMail class, set the appropriate properties, and call the SendMail method. See the sample program at the top of this document.
@@ -113,6 +129,10 @@ To deploy SFMail with your application, add SFMail.prg and wwDotNetBridge.prg to
 The source for the .NET wrapper used by SFMail is in the SMTPLibrary2 folder; SMTPLibrary2.sln is the C# solution file. ("SMTPLibrary2" because the older wrapper I mentioned earlier was "SMTPLibrary".)
 
 ## Updates
+
+### 2022-03-16
+
+Added support for Modern Authentication.
 
 ### 2021-02-04
 

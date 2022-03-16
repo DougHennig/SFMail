@@ -84,6 +84,11 @@ namespace SMTPLibrary2
         public int SecurityOptions { get; set; } = 1;
 
         /// <summary>
+        /// An OAuth2 authentication object.
+        /// </summary>
+        public SaslMechanism OAuthenticate { get; set; }
+
+        /// <summary>
         /// The timeout in seconds.
         /// </summary>
         public int Timeout { get; set; }
@@ -172,10 +177,15 @@ namespace SMTPLibrary2
                 // Accept all SSL certificates (in case the server supports STARTTLS).
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
                 client.Timeout = Timeout * 1000;
-                // See https://unop.uk/sending-email-in-.net-core-with-office-365-and-mailkit/ for Office 365
+                // See https://unop.uk/sending-email-in-.net-core-with-office-365-and-mailkit/ for Office 365 or 
+                // https://unop.uk/advanced-email-sending-with-.net-core-and-mailkit/ for a more advanced guide
                 SecureSocketOptions value = (SecureSocketOptions)SecurityOptions;
                 client.Connect(MailServer, ServerPort, value);
-                if (!String.IsNullOrWhiteSpace(UserName))
+                if (OAuthenticate != null)
+                {
+                    client.Authenticate(OAuthenticate);
+                }
+                else if (!String.IsNullOrWhiteSpace(UserName))
                 {
                     // TODO: may have to use System.Text.Encoding.UTF8 as first parameter; see https://github.com/jstedfast/MailKit/issues/686
                     // See https://dotnetcoretutorials.com/2018/03/18/common-errors-sending-email-mailkit/ for common errors
