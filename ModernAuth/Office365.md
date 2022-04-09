@@ -72,6 +72,14 @@ Before you can use SFMail with Office 365 using Modern Authentication, you have 
 
 > Be sure to do this now because you can't retrieve it later.
 
+* Have the administrator enable SMTP: navigate to https://portal.office.com, select Active Users in the panel at the left, select the desired user, click Mail, and click Manage Email Apps in the Email Apps section.
+
+![](user.png)
+
+    Turn on the desired choices, especially Authenticated SMTP, and click Save Changes.
+
+![](manageemail.png)
+
 That's it: your Office 365 account is now configured to use Modern Authentication. Use the three values you saved in the properties of the SFMail object:
 
 * OAuth 2.0 Token Endpoint (v2) URL: goes into the cOAuthURL property
