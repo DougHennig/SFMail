@@ -128,7 +128,11 @@ To deploy SFMail with your application, add SFMail.prg and wwDotNetBridge.prg to
 
 The source for the .NET wrapper used by SFMail is in the SMTPLibrary2 folder; SMTPLibrary2.sln is the C# solution file. ("SMTPLibrary2" because the older wrapper I mentioned earlier was "SMTPLibrary".)
 
-## Updates
+## Helping with this project
+
+See [How to contribute to SFMail](.github/CONTRIBUTING.md) for details on how to help with this project.
+
+## Releases
 
 ### 2022-03-16
 
