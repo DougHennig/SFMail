@@ -36,7 +36,7 @@ endwith
 * Class:			SFMail
 * Purpose:			Wrapper to send email via MAPI or SMTP
 * Author:			Doug Hennig
-* Last revision:	03/12/2022
+* Last revision:	05/18/2022
 *==============================================================================
 
 define class SFMail as Custom
@@ -89,7 +89,7 @@ define class SFMail as Custom
 * Method:			SendMailMAPI
 * Purpose:			Sends the email using MAPI
 * Author:			Doug Hennig
-* Last revision:	03/16/2020
+* Last revision:	05/18/2022
 * Parameters:		none
 * Returns:			.T. if the message was sent
 * Environment in:	the properties are set for emailing
@@ -128,9 +128,11 @@ define class SFMail as Custom
 * Create the message.	
 		
 			if '<HTML' $ upper(.cBody) or '{\RTF' $ upper(.cBody)
-				EMCreateMessageEx(.cSubject, .cBody, IMPORTANCE_NORMAL)
+				evaluate('EMCreateMessageEx(.cSubject, .cBody, 1)')
+					&& 1 = IMPORTANCE_NORMAL
 			else
-				EMCreateMessage(.cSubject, .cBody, IMPORTANCE_NORMAL)
+				evaluate('EMCreateMessage(.cSubject, .cBody, 1)')
+					&& 1 = IMPORTANCE_NORMAL
 			endif '<HTML' $ upper(.cBody) ...
 		
 * Add recipients.
@@ -138,7 +140,8 @@ define class SFMail as Custom
 			lcRecipients = strtran(.cRecipients, ',', ';')
 			lnRecipients = alines(laRecipients, lcRecipients, 4, ';')
 			for lnI = 1 to lnRecipients
-				EMAddRecipient(laRecipients[lnI], MAPI_TO)
+				evaluate('EMAddRecipient(laRecipients[lnI], 1)')
+					&& 1 = MAPI_TO
 			next lnI
 		
 * Add CC recipients.
@@ -146,7 +149,8 @@ define class SFMail as Custom
 			lcRecipients = strtran(.cCCRecipients, ',', ';')
 			lnRecipients = alines(laRecipients, lcRecipients, 4, ';')
 			for lnI = 1 to lnRecipients
-				EMAddRecipient(laRecipients[lnI], MAPI_CC)
+				evaluate('EMAddRecipient(laRecipients[lnI], 2)')
+					&& 2 = MAPI_CC
 			next lnI
 		
 * Add BCC recipients.
@@ -154,20 +158,21 @@ define class SFMail as Custom
 			lcRecipients = strtran(.cBCCRecipients, ',', ';')
 			lnRecipients = alines(laRecipients, lcRecipients, 4, ';')
 			for lnI = 1 to lnRecipients
-				EMAddRecipient(laRecipients[lnI], MAPI_BCC)
+				evaluate('EMAddRecipient(laRecipients[lnI], 3)')
+					&& 3 = MAPI_BCC
 			next lnI
 		
 * Add attachments
 		
 			lnAttachments = alines(laAttachments, .cAttachments, 4, ',')
 			for lnI = 1 to lnAttachments
-				EMAddAttachment(laAttachments[lnI])
+				evaluate('EMAddAttachment(laAttachments[lnI])')
 			next lnI
 		endwith
 		
 * Send the message.
 		
-		llReturn = EMSend(.T.)
+		llReturn = evaluate('EMSend(.T.)')
 		return llReturn
 	endproc
 

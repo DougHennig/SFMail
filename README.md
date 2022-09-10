@@ -134,10 +134,14 @@ See [How to contribute to SFMail](.github/CONTRIBUTING.md) for details on how to
 
 ## Releases
 
+### 2022-09-10
+
+* No longer gives project manager build errors when VFPExMAPI.fll is not present.
+
 ### 2022-03-16
 
-Added support for Modern Authentication.
+* Added support for Modern Authentication.
 
 ### 2021-02-04
 
-Initial release.
+* Initial release.
