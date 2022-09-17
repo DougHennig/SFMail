@@ -88,6 +88,8 @@ SFMail supports Modern Authentication through the cOAuth* properties. Simply set
 
 * cUser: The user name for the mail server (SMTP only).
 
+* lUseHTML: .T. to send the email as HTML or .F. to use plain text. It defaults to .F. but is automatically set to .T. if you set cBody to a value containing both "<" and ">". You can set it back to .F. if desired before calling Send.
+
 * lUseMAPI: .T. to use MAPI or .F. (the default) to use SMTP. SFMail uses Craig Boyd's <a href="https://www.sweetpotatosoftware.com/blog/index.php/2007/06/09/updated-visual-foxpro-extended-mapi-fll/" target="_blank">VFPExMAPI.fll</a> if this property is .T.
 
 * nSecurityOptions: The SecureSocketOptions value to use; see the <a href="http://www.mimekit.net/docs/html/T_MailKit_Security_SecureSocketOptions.htm" target="_blank">MailKit documentation</a> for the values) (SMTP only). The default is 1 (Auto), which I find works best for most servers.
@@ -133,6 +135,10 @@ The source for the .NET wrapper used by SFMail is in the SMTPLibrary2 folder; SM
 See [How to contribute to SFMail](.github/CONTRIBUTING.md) for details on how to help with this project.
 
 ## Releases
+
+### 2022-09-17
+
+* The new lUseHTML property allows you to control whether the email is sent as HTML or plain text.
 
 ### 2022-09-10
 

@@ -55,6 +55,7 @@ define class SFMail as Custom
 	cSubject           = ''		&& The email subject
 	cUser              = ''		&& The user name for the mail server (SMTP only)
 	lUseMAPI           = .F.	&& .T. to use MAPI or .F. to use SMTP
+	lUseHTML           = .F.	&& .T. to use HTML or .F. to use plain text
 	nSecurityOptions   = 1		&& The SecureSocketOptions value to use (SMTP only)
 	nSMTPPort          = 25		&& The SMTP port to use (SMTP only)
 	nTimeout           = 30		&& The email timeout in seconds
@@ -89,7 +90,7 @@ define class SFMail as Custom
 * Method:			SendMailMAPI
 * Purpose:			Sends the email using MAPI
 * Author:			Doug Hennig
-* Last revision:	05/18/2022
+* Last revision:	09/17/2022
 * Parameters:		none
 * Returns:			.T. if the message was sent
 * Environment in:	the properties are set for emailing
@@ -127,7 +128,7 @@ define class SFMail as Custom
 		
 * Create the message.	
 		
-			if '<HTML' $ upper(.cBody) or '{\RTF' $ upper(.cBody)
+			if '<HTML' $ upper(.cBody) or '{\RTF' $ upper(.cBody) or .lUseHTML
 				evaluate('EMCreateMessageEx(.cSubject, .cBody, 1)')
 					&& 1 = IMPORTANCE_NORMAL
 			else
@@ -180,7 +181,7 @@ define class SFMail as Custom
 * Method:			SendMailSMTP
 * Purpose:			Sends the email using SMTP
 * Author:			Doug Hennig
-* Last revision:	03/12/2022
+* Last revision:	09/17/2022
 * Parameters:		none
 * Returns:			.T. if the message was sent
 * Environment in:	the properties are set for emailing
@@ -236,7 +237,7 @@ define class SFMail as Custom
 					loMail.Message         = .cBody
 					loMail.Username        = .cUser
 					loMail.Password        = .cPassword
-					loMail.UseHtml         = '<' $ .cBody and '>' $ .cBody
+					loMail.UseHtml         = .lUseHTML
 					loMail.Timeout         = .nTimeout
 
 * Add any attachments.
@@ -276,6 +277,22 @@ define class SFMail as Custom
 			endtry
 		endwith
 		return llReturn
+	endproc
+
+*==============================================================================
+* Method:			cBody_Assign
+* Purpose:			Assigns a value to cBody
+* Author:			Doug Hennig
+* Last revision:	09/17/2022
+* Parameters:		tcValue - the value to assign
+* Returns:			.T.
+* Environment in:	none
+* Environment out:	if the value contains both > and <, lUseHTML is .T.
+*==============================================================================
+
+	procedure cBody_Assign(tcValue)
+		This.cBody    = tcValue
+		This.lUseHTML = '<' $ tcValue and '>' $ tcValue
 	endproc
 
 *==============================================================================
