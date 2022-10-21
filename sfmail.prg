@@ -378,6 +378,10 @@ define class SFMail as Custom
 			'&scope=' + This.Encode(This.cOAuthScope) + ;
 			'&client_secret=' + This.Encode(This.cOAuthClientSecret)
 		loHTTP = createobject('msxml2.xmlhttp')
+*** Note: could use this if you need to control the timeout: see
+*** https://learn.microsoft.com/en-US/previous-versions/windows/desktop/ms762278(v=vs.85)
+*		loHTTP = createobject('msxml2.serverxmlhttp')
+*		loHTTP.SetTimeouts(60000, 60000, 30000, 30000)
 		loHTTP.open('POST', This.cOAuthURL)
 		loHTTP.SetRequestHeader('Content-Type', ;
 			'application/x-www-form-urlencoded')
