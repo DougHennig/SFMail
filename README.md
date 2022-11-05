@@ -126,6 +126,8 @@ To deploy SFMail with your application, add SFMail.prg and wwDotNetBridge.prg to
 
 * wwDotNetBridge.dll
 
+> Note: if your app runs from a network folder, you will likely need to distribute a config file that tells .NET to allow remote execution. Rename myapp.exe.config included in this repository to the name of your EXE; for example, for an EXE named Customers.exe, rename myapp.exe.config to Customers.exe.config and distribute it with the application.
+
 ## .NET Wrapper
 
 The source for the .NET wrapper used by SFMail is in the SMTPLibrary2 folder; SMTPLibrary2.sln is the C# solution file. ("SMTPLibrary2" because the older wrapper I mentioned earlier was "SMTPLibrary".)
