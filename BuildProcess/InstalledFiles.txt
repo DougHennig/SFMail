@@ -1,0 +1,9 @@
+BouncyCastle.Crypto.dll
+clrhost.dll
+MailKit.dll
+MimeKit.dll
+sfmail.prg
+SMTPLibrary2.dll
+vfpexmapi.fll
+wwDotNetBridge.dll
+wwDotNetBridge.prg

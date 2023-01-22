@@ -7,7 +7,7 @@ with toUpdateObject
 	.AvailableVersion = 'SFMail-1.0-update-20230122'
 	.Component        = 'Yes'
 	.Notes            = GetNotes()
-	.RegisterWithThor = GetRegisterWithThor()
+*	.RegisterWithThor = GetRegisterWithThor()
 endwith
 return toUpdateObject
 
