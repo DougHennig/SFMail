@@ -1,0 +1,52 @@
+lparameters toUpdateObject
+
+* Set the properties of the passed updater object.
+
+with toUpdateObject
+	.VersionNumber    = '1.0 - 20230122'
+	.AvailableVersion = 'SFMail-1.0-update-20230122'
+	.Component        = 'Yes'
+	.Notes            = GetNotes()
+	.RegisterWithThor = GetRegisterWithThor()
+endwith
+return toUpdateObject
+
+* Get the notes for the project.
+
+procedure GetNotes
+local lcNotes
+text to lcNotes noshow
+# SFMail
+
+SFMail provides the ability to send emails from VFP applications, including support for Modern Authentication.
+
+## Release history
+
+### 2022-09-17
+
+* The new lUseHTML property allows you to control whether the email is sent as HTML or plain text.
+
+### 2022-09-10
+
+* No longer gives project manager build errors when VFPExMAPI.fll is not present.
+
+### 2022-03-16
+
+* Added support for Modern Authentication.
+
+### 2021-02-04
+
+* Initial release.
+
+endtext
+return lcNotes
+
+* Register the tool with Thor. Note: Thor replaces ##InstallFolder## with the
+* installation path for the tool when this code is executed.
+
+procedure GetRegisterWithThor
+local lcCommand
+text to lcCommand noshow
+
+endtext
+return lcCommand

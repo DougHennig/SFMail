@@ -138,18 +138,4 @@ See [How to contribute to SFMail](.github/CONTRIBUTING.md) for details on how to
 
 ## Releases
 
-### 2022-09-17
-
-* The new lUseHTML property allows you to control whether the email is sent as HTML or plain text.
-
-### 2022-09-10
-
-* No longer gives project manager build errors when VFPExMAPI.fll is not present.
-
-### 2022-03-16
-
-* Added support for Modern Authentication.
-
-### 2021-02-04
-
-* Initial release.
+See the [change log](ChangeLog.md) for release information.
