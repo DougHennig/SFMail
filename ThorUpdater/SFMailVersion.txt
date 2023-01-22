@@ -3,8 +3,8 @@ lparameters toUpdateObject
 * Set the properties of the passed updater object.
 
 with toUpdateObject
-	.VersionNumber    = '1.0 - 20230122'
-	.AvailableVersion = 'SFMail-1.0-update-20230122'
+	.VersionNumber    = '1.0 - 20220917'
+	.AvailableVersion = 'SFMail-1.0-update-20220917'
 	.Notes            = GetNotes()
 	.RegisterWithThor = GetRegisterWithThor()
 endwith
