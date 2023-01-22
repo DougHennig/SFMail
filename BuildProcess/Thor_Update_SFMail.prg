@@ -23,6 +23,7 @@ with toUpdateObject
 	.VersionLocalFilename = 'SFMailVersionFile.txt'
 	.VersionFileURL       = lcVersionFileURL
 	.SourceFileUrl        = lcZIPFileURL
+	.Component            = 'Yes'
 	.Link                 = lcRepositoryURL
 	.LinkPrompt           = 'SFMail Home Page'
 	.ProjectCreationDate  = date(2021, 2, 4)

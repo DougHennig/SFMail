@@ -19,7 +19,6 @@ Also, any text between @@@ and \\\ is removed.
 with toUpdateObject
 	.VersionNumber    = '{VERSION} - {VERSIONDATE}'
 	.AvailableVersion = '{APPNAME}-{VERSION}-update-{VERSIONDATE}'
-	.Component        = '{COMPONENT}'
 	.Notes            = GetNotes()
 	.RegisterWithThor = GetRegisterWithThor()
 endwith

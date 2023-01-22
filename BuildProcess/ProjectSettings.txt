@@ -3,4 +3,4 @@ AppID      = SFMail
 Version    = 1.0
 Component  = Yes
 ChangeLog  = ChangeLog.md
-Repository = https://github.com/DougHennig
+Repository = https://github.com/DougHennig/SFMail
