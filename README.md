@@ -2,17 +2,17 @@
 
 There are many libraries you can use to send emails from VFP applications. I created my own several years ago: a C# wrapper class using the .NET <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.mail.smtpclient?view=netcore-3.1" target="_blank">SMTPClient class</a>, which I call using Rick Strahl's <a href="https://github.com/RickStrahl/wwDotnetBridge" target="_blank">wwDotNetBridge</a>. However, as discussed <a href="https://www.infoq.com/news/2017/04/MailKit-MimeKit-Official/" target="_blank">here</a>, Microsoft no longer recommends using this class because it doesn't support modern protocols. As suggested in the article, I've rewritten my wrapper class to use the open source <a href="https://github.com/jstedfast/MailKit" target="_blank">MailKit</a> project.
 
-Here's some code that shows how to use this wrapper class:
+Here's some code that shows how to use this wrapper class with Office365:
 
 ```FoxPro
 local loMail, ;
    llReturn
 loMail = newobject('SFMail', 'SFMail.prg')
 with loMail
-   .cServer      = 'MyMailServer.com'
+   .cServer      = 'smtp.office365.com'
    .cUser        = 'MyUserName'
    .cPassword    = 'MyPassword'
-   .nSMTPPort    = 25
+   .nSMTPPort    = 587
    .cSenderEmail = .cUser
    .cSenderName  = 'My Name'
    .cRecipients  = 'someone@somewhere.com'
@@ -112,15 +112,27 @@ To use SFMail, instantiate the SFMail class, set the appropriate properties, and
 
 To deploy SFMail with your application, add SFMail.prg and wwDotNetBridge.prg to your project and include the following files with the files distributed with your application:
 
-* BouncyCastle.Crypto.dll
+* ClrHost.dll
 
-* CLRHost.dll
+* MailKitLite.dll
 
-* MailKit.dll
-
-* MIMEKit.dll
+* MimeKitLite.dll
 
 * SMTPLibrary2.dll
+
+* System.Buffers.dll
+
+* System.Formats.Asn1.dll
+
+* System.Memory.dll
+
+* System.Numerics.Vectors.dll
+
+* System.Runtime.CompilerServices.Unsafe.dll
+
+* System.Threading.Tasks.Extensions.dll
+
+* System.ValueTuple.dll
 
 * VFPExMAPI.fll (only needed if you use MAPI)
 
@@ -137,5 +149,7 @@ The source for the .NET wrapper used by SFMail is in the SMTPLibrary2 folder; SM
 See [How to contribute to SFMail](.github/CONTRIBUTING.md) for details on how to help with this project.
 
 ## Releases
+
+The latest version is 2025.04.05 (the cVersion property of the SFMail class).
 
 See the [change log](ChangeLog.md) for release information.

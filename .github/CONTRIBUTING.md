@@ -12,7 +12,11 @@
 
 - Make whatever changes are necessary.
 
-- If this is a new major release, edit the Version setting in *BuildProcess\ProjectSettings.txt*.
+- If you make changes to SFMail.prg, change the cVersion property to reflect the current date, such as "2025.04.06" for April 6, 2025.
+
+- If you make changes to the source for SMTPLibrary2.dll, change the assembly version number to reflect the current date, such as "2025.04.06" for April 6, 2025.
+
+- Edit the Version setting in *BuildProcess\ProjectSettings.txt* to be the same as the cVersion property in SFMail.prg.
 
 - If you added or removed files, update *BuildProcess\InstalledFiles.txt* as necessary.
 

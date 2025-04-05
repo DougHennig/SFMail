@@ -36,33 +36,34 @@ endwith
 * Class:			SFMail
 * Purpose:			Wrapper to send email via MAPI or SMTP
 * Author:			Doug Hennig
-* Last revision:	05/18/2022
+* Last revision:	04/05/2025
 *==============================================================================
 
 define class SFMail as Custom
-	cAttachments       = ''		&& A comma-separated list of attachments for the email
-	cBCCRecipients     = ''		&& A comma- or semicolon-separated list of BCC recipients for the email
-	cBody              = ''		&& The email body
-	cCCRecipients      = ''		&& A comma- or semicolon-separated list of CC recipients for the email
-	cErrorMessage      = ''		&& The text of any error
-	cLogFile           = ''		&& The name of a log file (SMTP only)
-	cPassword          = ''		&& The password for the mail server (SMTP only)
-	cRecipients        = ''		&& A comma- or semicolon-separated list of recipients for the email
-	cReplyTo           = ''		&& The Reply To address for the email (SMTP only)
-	cSenderEmail       = ''		&& The email address of the sender (SMTP only)
-	cSenderName        = ''		&& The name of the sender (SMTP only)
-	cServer            = ''		&& The mail server address (SMTP only)
-	cSubject           = ''		&& The email subject
-	cUser              = ''		&& The user name for the mail server (SMTP only)
-	lUseMAPI           = .F.	&& .T. to use MAPI or .F. to use SMTP
-	lUseHTML           = .F.	&& .T. to use HTML or .F. to use plain text
-	nSecurityOptions   = 1		&& The SecureSocketOptions value to use (SMTP only)
-	nSMTPPort          = 25		&& The SMTP port to use (SMTP only)
-	nTimeout           = 30		&& The email timeout in seconds
-	cOAuthURL          = ''		&& The URL to use to get an OAuth token
-	cOAuthClientID     = ''		&& The OAuth client ID
-	cOAuthScope        = ''		&& The OAuth scope
-	cOAuthClientSecret = ''		&& The OAuth client secret
+	cAttachments       = ''				&& A comma-separated list of attachments for the email
+	cBCCRecipients     = ''				&& A comma- or semicolon-separated list of BCC recipients for the email
+	cBody              = ''				&& The email body
+	cCCRecipients      = ''				&& A comma- or semicolon-separated list of CC recipients for the email
+	cErrorMessage      = ''				&& The text of any error
+	cLogFile           = ''				&& The name of a log file (SMTP only)
+	cPassword          = ''				&& The password for the mail server (SMTP only)
+	cRecipients        = ''				&& A comma- or semicolon-separated list of recipients for the email
+	cReplyTo           = ''				&& The Reply To address for the email (SMTP only)
+	cSenderEmail       = ''				&& The email address of the sender (SMTP only)
+	cSenderName        = ''				&& The name of the sender (SMTP only)
+	cServer            = ''				&& The mail server address (SMTP only)
+	cSubject           = ''				&& The email subject
+	cUser              = ''				&& The user name for the mail server (SMTP only)
+	lUseMAPI           = .F.			&& .T. to use MAPI or .F. to use SMTP
+	lUseHTML           = .F.			&& .T. to use HTML or .F. to use plain text
+	nSecurityOptions   = 1				&& The SecureSocketOptions value to use (SMTP only)
+	nSMTPPort          = 25				&& The SMTP port to use (SMTP only)
+	nTimeout           = 30				&& The email timeout in seconds
+	cOAuthURL          = ''				&& The URL to use to get an OAuth token
+	cOAuthClientID     = ''				&& The OAuth client ID
+	cOAuthScope        = ''				&& The OAuth scope
+	cOAuthClientSecret = ''				&& The OAuth client secret
+	cVersion           = '2025.04.05'	&& The version number
 
 *==============================================================================
 * Method:			SendMail
@@ -191,8 +192,7 @@ define class SFMail as Custom
 *						loaded
 * Environment out:	the email may have been sent
 *					wwDotNetBridge has been loaded if it wasn't before
-*					SMTPLibrary2.dll, BouncyCastle.Crypto.dll, MimeKit.dll, and
-*						MailKit.dll have been loaded
+*					SMTPLibrary2.dll and its supporting DLLs have been loaded
 *==============================================================================
 
 	protected procedure SendMailSMTP

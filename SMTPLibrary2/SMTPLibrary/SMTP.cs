@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using MailKit.Net.Smtp;
 using MailKit;
 using MimeKit;
-using System.IO;
 using MailKit.Security;
+using System.Security.Authentication;
 
 namespace SMTPLibrary2
 {
@@ -127,21 +127,21 @@ namespace SMTPLibrary2
             message.From.Add(new MailboxAddress(SenderName, SenderEmail));
             foreach (string address in Recipients.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
             {
-                message.To.Add(new MailboxAddress(address.Trim()));
+                message.To.Add(new MailboxAddress("", address.Trim()));
             }
             foreach (string address in CCRecipients.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
             {
-                message.Cc.Add(new MailboxAddress(address.Trim()));
+                message.Cc.Add(new MailboxAddress("", address.Trim()));
             }
             foreach (string address in BCCRecipients.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
             {
-                message.Bcc.Add(new MailboxAddress(address.Trim()));
+                message.Bcc.Add(new MailboxAddress("", address.Trim()));
             }
             if (!String.IsNullOrEmpty(ReplyTo))
             {
                 foreach (string address in ReplyTo.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    message.ReplyTo.Add(new MailboxAddress(address.Trim()));
+                    message.ReplyTo.Add(new MailboxAddress("", address.Trim()));
                 }
             }
 
@@ -176,11 +176,18 @@ namespace SMTPLibrary2
             {
                 // Accept all SSL certificates (in case the server supports STARTTLS).
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-                client.Timeout = Timeout * 1000;
+
                 // See https://unop.uk/sending-email-in-.net-core-with-office-365-and-mailkit/ for Office 365 or 
                 // https://unop.uk/advanced-email-sending-with-.net-core-and-mailkit/ for a more advanced guide
                 SecureSocketOptions value = (SecureSocketOptions)SecurityOptions;
+                // See https://github.com/jstedfast/MailKit/blob/master/FAQ.md#ssl-handshake-exception for why setting SslProtocols
+                client.SslProtocols = SslProtocols.Ssl3 | SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
+
+                // Connect to the server.
+                client.Timeout = Timeout * 1000;
                 client.Connect(MailServer, ServerPort, value);
+
+                // Authenticate.
                 if (OAuthenticate != null)
                 {
                     client.Authenticate(OAuthenticate);
@@ -191,6 +198,8 @@ namespace SMTPLibrary2
                     // See https://dotnetcoretutorials.com/2018/03/18/common-errors-sending-email-mailkit/ for common errors
                     client.Authenticate(UserName, Password);
                 }
+                
+                // Send the message.
                 client.Send(message);
                 client.Disconnect(true);
             }
