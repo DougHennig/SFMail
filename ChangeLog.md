@@ -4,6 +4,12 @@ SFMail provides the ability to send emails from VFP applications, including supp
 
 ## Release history
 
+## 2025-07-29: version 2025.07.29
+
+* Attachment file names are now encoded as UTF-8 (thanks to kobruleht for the suggestion).
+
+* GetToken in SFMail.prg now uses DATETIME() rather than SECONDS() to avoid issues with a date boundary.
+
 ## 2025-04-05
 
 * SMTPLibrary2.dll (the Product Version property) and SFMail (the cVersion property) now have version numbers: 2025.04.05.

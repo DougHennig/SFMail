@@ -36,7 +36,7 @@ endwith
 * Class:			SFMail
 * Purpose:			Wrapper to send email via MAPI or SMTP
 * Author:			Doug Hennig
-* Last revision:	04/05/2025
+* Last revision:	07/29/2025
 *==============================================================================
 
 define class SFMail as Custom
@@ -63,7 +63,7 @@ define class SFMail as Custom
 	cOAuthClientID     = ''				&& The OAuth client ID
 	cOAuthScope        = ''				&& The OAuth scope
 	cOAuthClientSecret = ''				&& The OAuth client secret
-	cVersion           = '2025.04.05'	&& The version number
+	cVersion           = '2025.07.29'	&& The version number
 
 *==============================================================================
 * Method:			SendMail
@@ -354,7 +354,7 @@ define class SFMail as Custom
 * Method:			GetToken
 * Purpose:			Gets an OAuth2 token
 * Author:			Doug Hennig, adapted from code written by Rick Strahl
-* Last revision:	03/12/2022
+* Last revision:	07/28/2025
 * Parameters:		none
 * Returns:			an OAuth2 token string if it succeeded or empty if not
 * Environment in:	This.cOAuthURL, This.cOAuthClientID, This.cOAuthScope,
@@ -386,11 +386,11 @@ define class SFMail as Custom
 		loHTTP.SetRequestHeader('Content-Type', ;
 			'application/x-www-form-urlencoded')
 		loHTTP.Send(lcPost)
-		lnStart = seconds()
+		lnStart = datetime()
 		do while loHTTP.ReadyState <> 4
-			if seconds() = lnStart + This.nTimeout
+			if datetime() >= lnStart + This.nTimeout
 				exit
-			endif seconds() = lnStart + This.nTimeout
+			endif datetime() >= lnStart + This.nTimeout
 		enddo while loHTTP.ReadyState <> 4
 		lcReturn = loHTTP.ResponseText
 		lcToken  = strextract(lcReturn, '"access_token":"', '"')

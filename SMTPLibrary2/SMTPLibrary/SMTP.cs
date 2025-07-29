@@ -156,9 +156,15 @@ namespace SMTPLibrary2
             {
                 builder.TextBody = Message;
             }
+            MimeEntity attachment;
             foreach (string path in _attachments)
             {
-                builder.Attachments.Add(path);
+                attachment = builder.Attachments.Add(path);
+                foreach (var parameter in attachment.ContentType.Parameters)
+                    parameter.EncodingMethod = ParameterEncodingMethod.Rfc2047;
+
+                foreach (var parameter in attachment.ContentDisposition.Parameters)
+                    parameter.EncodingMethod = ParameterEncodingMethod.Rfc2047;
             }
             message.Body = builder.ToMessageBody();
 
