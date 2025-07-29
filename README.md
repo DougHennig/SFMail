@@ -152,6 +152,6 @@ See [How to contribute to SFMail](.github/CONTRIBUTING.md) for details on how to
 
 ## Releases
 
-The latest version is 2025.04.05 (the cVersion property of the SFMail class).
+The latest version is 2025.07.29 (the cVersion property of the SFMail class).
 
 See the [change log](ChangeLog.md) for release information.

@@ -1,6 +1,5 @@
 *.FXP
-*.fxp
-SMTPLibrary2/.vs/*
-SMTPLibrary2/packages/*
-SMTPLibrary2/SMTPLibrary/bin/*
-SMTPLibrary2/SMTPLibrary/obj/*
+.vs
+packages
+bin
+obj
