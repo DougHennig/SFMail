@@ -36,7 +36,7 @@ endwith
 * Class:			SFMail
 * Purpose:			Wrapper to send email via MAPI or SMTP
 * Author:			Doug Hennig
-* Last revision:	07/29/2025
+* Last revision:	02/06/2026
 *==============================================================================
 
 define class SFMail as Custom
@@ -63,7 +63,7 @@ define class SFMail as Custom
 	cOAuthClientID     = ''				&& The OAuth client ID
 	cOAuthScope        = ''				&& The OAuth scope
 	cOAuthClientSecret = ''				&& The OAuth client secret
-	cVersion           = '2025.07.29'	&& The version number
+	cVersion           = '2026.02.06'	&& The version number
 
 *==============================================================================
 * Method:			SendMail
@@ -216,6 +216,7 @@ define class SFMail as Custom
 				if not file('SMTPLibrary2.dll')
 					lcPath = .GetAppFolder()
 				endif not file('SMTPLibrary2.dll')
+*lcPath = 'C:\Development\VFPX\Mail\SMTPLibrary2\SMTPLibrary\bin\Debug\'
 				loBridge.LoadAssembly(lcPath + 'SMTPLibrary2.dll')
 
 * If we succeeded, instantiate the SMTP class and set its properties.
@@ -354,13 +355,13 @@ define class SFMail as Custom
 * Method:			GetToken
 * Purpose:			Gets an OAuth2 token
 * Author:			Doug Hennig, adapted from code written by Rick Strahl
-* Last revision:	07/28/2025
+* Last revision:	02/06/2026
 * Parameters:		none
 * Returns:			an OAuth2 token string if it succeeded or empty if not
 * Environment in:	This.cOAuthURL, This.cOAuthClientID, This.cOAuthScope,
 *						This.cOAuthClientSecret, This.cUser, and This.cPassword
 *						contain the appropriate values
-*					msxml2.xmlhttp is available to be used
+*					WinHttp.WinHttpRequest.5.1 is available to be used
 * Environment out:	This.cErrorMessage contains the error message if something
 *						went wrong
 *==============================================================================
@@ -377,21 +378,14 @@ define class SFMail as Custom
 			'&password=' + This.Encode(This.cPassword) + ;
 			'&scope=' + This.Encode(This.cOAuthScope) + ;
 			'&client_secret=' + This.Encode(This.cOAuthClientSecret)
-		loHTTP = createobject('msxml2.xmlhttp')
+		loHTTP = createobject('WinHttp.WinHttpRequest.5.1')
 *** Note: could use this if you need to control the timeout: see
-*** https://learn.microsoft.com/en-US/previous-versions/windows/desktop/ms762278(v=vs.85)
-*		loHTTP = createobject('msxml2.serverxmlhttp')
+*** https://learn.microsoft.com/en-us/windows/win32/winhttp/iwinhttprequest-settimeouts
 *		loHTTP.SetTimeouts(60000, 60000, 30000, 30000)
-		loHTTP.open('POST', This.cOAuthURL)
+		loHTTP.Open('POST', This.cOAuthURL)
 		loHTTP.SetRequestHeader('Content-Type', ;
 			'application/x-www-form-urlencoded')
 		loHTTP.Send(lcPost)
-		lnStart = datetime()
-		do while loHTTP.ReadyState <> 4
-			if datetime() >= lnStart + This.nTimeout
-				exit
-			endif datetime() >= lnStart + This.nTimeout
-		enddo while loHTTP.ReadyState <> 4
 		lcReturn = loHTTP.ResponseText
 		lcToken  = strextract(lcReturn, '"access_token":"', '"')
 		if empty(lcToken)
