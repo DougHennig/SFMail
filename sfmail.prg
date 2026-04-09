@@ -187,9 +187,8 @@ define class SFMail as Custom
 * Returns:			.T. if the message was sent
 * Environment in:	the properties are set for emailing
 *					wwDotNetBridge has been loaded or is available to be loaded
-*					SMTPLibrary2.dll, BouncyCastle.Crypto.dll, MimeKit.dll, and
-*						MailKit.dll have been loaded or are available to be
-*						loaded
+*					SMTPLibrary2.dll and its supporting DLLs have been loaded
+*						or are available to be loaded
 * Environment out:	the email may have been sent
 *					wwDotNetBridge has been loaded if it wasn't before
 *					SMTPLibrary2.dll and its supporting DLLs have been loaded

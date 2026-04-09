@@ -13,3 +13,7 @@ System.ValueTuple.dll
 vfpexmapi.fll
 wwDotNetBridge.dll
 wwDotNetBridge.prg
+MFA\ClrHost.dll
+MFA\SFMail.prg
+MFA\SMTPLibraryCore.dll
+MFA\wwDotNetBridge.dll

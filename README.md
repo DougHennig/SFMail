@@ -52,13 +52,13 @@ The class supports the following:
 
 * Diagnostic logging
 
-## Modern Authentication
+## Modern authentication
 
-Basic Authentication is simply providing a user name and password to connect to a mail server. More and more mail services are moving away from Basic Authentication and implementing Modern Authentication, also known as OAuth2. Modern Authentication uses a two-step process to connect to a mail server: first obtaining a token (a string) from a web server, then using that token to connect to the mail server.
+Basic authentication is simply providing a user name and password to connect to a mail server. More and more mail services are moving away from basic authentication and implementing modern authentication, also known as OAuth2. Modern authentication uses a two-step process to connect to a mail server: first obtaining a token (a string) from a web server, then using that token to connect to the mail server.
 
-SFMail supports Modern Authentication through the cOAuth* properties. Simply set them to the appropriate values and SFMail takes care of both steps for you.
+SFMail supports modern authentication through the cOAuth* properties. Simply set them to the appropriate values and SFMail takes care of both steps for you.
 
-<a href="ModernAuth/Office365.md" target="_blank">Office365.md</a> has instructions for configuring Office 365 and getting the values you need for Modern Authentication.
+<a href="ModernAuth/Office365.md" target="_blank">Office365.md</a> has instructions for configuring Office 365 and getting the values you need for modern authentication.
 
 ## Properties
 
@@ -142,9 +142,19 @@ To deploy SFMail with your application, add SFMail.prg and wwDotNetBridge.prg to
 
 > Note: if your app runs from a network folder, you will likely need to distribute a config file that tells .NET to allow remote execution. Rename myapp.exe.config included in this repository to the name of your EXE; for example, for an EXE named Customers.exe, rename myapp.exe.config to Customers.exe.config and distribute it with the application.
 
-## .NET Wrapper
+## .NET wrapper
 
 The source for the .NET wrapper used by SFMail is in the SMTPLibrary2 folder; SMTPLibrary2.sln is the C# solution file. ("SMTPLibrary2" because the older wrapper I mentioned earlier was "SMTPLibrary".)
+
+## Multi-factor authentication
+
+Multi-factor authentication makes dealing with a mail server much more complicated. Typically, a browser window is opened so the user can authenticate and a token is passed back to the client code (the authentication flow is discussed at https://stackoverflow.com/questions/76460724/aad-outh-generate-token-failure-aadsts50076). The problem is there's no way for VFP to accept such a token.
+
+kobruleht (sorry, I don't know their real name, just their GitHub name) created a version of the .NET wrapper that supports this as discussed at https://mimekit.net/docs/html/T_MailKit_Security_SaslMechanismOAuth2.htm. Note that it uses .NET 10 and different versions of SFMail.prg, wwDotNetBridge.dll, and ClrHost.dll and a different .NET wrapper name (SMTPLibraryCore.dll). The files are located in the MFA folder, including the C# source code for the .NET wrapper.
+
+To use it, instantiate an instance of the SFMail class in the SFMail.prg in the MFA folder, set the usual properties plus cClientID and cTenantID, and call SendMail as usual.
+
+I haven't tested this since I don't currently have MFA turned on in my accounts.
 
 ## Helping with this project
 

@@ -101,7 +101,7 @@ namespace SMTPLibrary2
         /// <summary>
         /// A list of attachments.
         /// </summary>
-        private List<string> _attachments = new List<string>();
+        private readonly List<string> _attachments = new List<string>();
 
         /// <summary>
         /// The constructor.
@@ -137,7 +137,7 @@ namespace SMTPLibrary2
             {
                 message.Bcc.Add(new MailboxAddress("", address.Trim()));
             }
-            if (!String.IsNullOrEmpty(ReplyTo))
+            if (!string.IsNullOrEmpty(ReplyTo))
             {
                 foreach (string address in ReplyTo.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
                 {
@@ -161,16 +161,23 @@ namespace SMTPLibrary2
             {
                 attachment = builder.Attachments.Add(path);
                 foreach (var parameter in attachment.ContentType.Parameters)
+                {
                     parameter.EncodingMethod = ParameterEncodingMethod.Rfc2047;
+                }
 
-                foreach (var parameter in attachment.ContentDisposition.Parameters)
-                    parameter.EncodingMethod = ParameterEncodingMethod.Rfc2047;
+                if (attachment.ContentDisposition != null)
+                {
+                    foreach (var parameter in attachment.ContentDisposition.Parameters)
+                    {
+                        parameter.EncodingMethod = ParameterEncodingMethod.Rfc2047;
+                    }
+                }
             }
             message.Body = builder.ToMessageBody();
 
             // Send the message.
             SmtpClient client;
-            if (String.IsNullOrWhiteSpace(LogFile))
+            if (string.IsNullOrWhiteSpace(LogFile))
             {
                 client = new SmtpClient();
             }
@@ -198,13 +205,13 @@ namespace SMTPLibrary2
                 {
                     client.Authenticate(OAuthenticate);
                 }
-                else if (!String.IsNullOrWhiteSpace(UserName))
+                else if (!string.IsNullOrWhiteSpace(UserName))
                 {
                     // TODO: may have to use System.Text.Encoding.UTF8 as first parameter; see https://github.com/jstedfast/MailKit/issues/686
                     // See https://dotnetcoretutorials.com/2018/03/18/common-errors-sending-email-mailkit/ for common errors
                     client.Authenticate(UserName, Password);
                 }
-                
+
                 // Send the message.
                 client.Send(message);
                 client.Disconnect(true);
