@@ -3,8 +3,8 @@ lparameters toUpdateObject
 * Set the properties of the passed updater object.
 
 with toUpdateObject
-	.VersionNumber    = '2026.04.09 - 20260409'
-	.AvailableVersion = 'SFMail-2026.04.09-update-20260409'
+	.VersionNumber    = '2026.04.09 - 20260410'
+	.AvailableVersion = 'SFMail-2026.04.09-update-20260410'
 	.Notes            = GetNotes()
 	.RegisterWithThor = GetRegisterWithThor()
 endwith
@@ -23,7 +23,7 @@ SFMail provides the ability to send emails from VFP applications, including supp
 
 ### 2026-04-09: version 2026.04.09
 
-* SFMail now supports multi-factor authentication using different copies of SFMail.prg, SMTPLibraryCore.dll, wwDotNetBridge.dll, and ClrHost.dll (all in the MFA folder).
+* Thanks to kobruleht, SFMail now supports multi-factor authentication using different copies of SFMail.prg, SMTPLibraryCore.dll, wwDotNetBridge.dll, and ClrHost.dll (all in the MFA folder).
 
 ### 2026-02-06: version 2026.02.06
 

@@ -9,6 +9,7 @@ using MailKit.Security;
 using System.Security.Authentication;
 using Microsoft.Identity.Client;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace SMTPLibraryCore
 {
@@ -149,8 +150,21 @@ namespace SMTPLibraryCore
                     .Build();
 
                 // 2. Acquire Access Token
-                // This will open a browser window for the user to complete MFA
-                AuthenticationResult result = await app.AcquireTokenInteractive(scopes).ExecuteAsync();
+                AuthenticationResult result;
+                try
+                {
+                    // 1. Try to get token silently from the cache
+                    var accounts = await app.GetAccountsAsync();
+                    result = await app.AcquireTokenSilent(scopes, accounts.FirstOrDefault())
+                        .ExecuteAsync();
+                }
+                catch (MsalUiRequiredException)
+                {
+                    // 2. If silent fails (e.g., first time or expired), trigger interactive login
+                    // This will open a browser window for the user to complete MFA
+                    result = await app.AcquireTokenInteractive(scopes)
+                        .ExecuteAsync();
+                }
                 string accessToken = result.AccessToken;
                 OAuthenticate = new SaslMechanismOAuth2(UserName, accessToken);
             }
