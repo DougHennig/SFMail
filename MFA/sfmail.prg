@@ -38,7 +38,7 @@ endwith
 * Class:			SFMail
 * Purpose:			Wrapper to send email via MAPI or SMTP
 * Author:			Doug Hennig
-* Last revision:	04/09/2026
+* Last revision:	04/13/2026
 *==============================================================================
 
 define class SFMail as Custom
@@ -186,7 +186,7 @@ define class SFMail as Custom
 * Method:			SendMailSMTP
 * Purpose:			Sends the email using SMTP
 * Author:			Doug Hennig
-* Last revision:	04/09/2026
+* Last revision:	04/13/2026
 * Parameters:		none
 * Returns:			.T. if the message was sent
 * Environment in:	the properties are set for emailing
@@ -265,10 +265,11 @@ define class SFMail as Custom
 					loMail.ClientID = .cClientID
 					loMail.TenantID = .cTenantID
 
-* Send the email.
+* Send the email: see https://www.west-wind.com/wconnect/weblog/ShowEntry.blog?id=932#How-async/await-works-in-.NET
 
 					if llReturn
-						loMail.SendMailAsync()
+						loTask = loBridge.InvokeMethod(loMail, 'SendMailAsync')
+						loBridge.GetProperty(loTask, 'Result')
 					endif llReturn
 
 * Grab the error message if it failed.
