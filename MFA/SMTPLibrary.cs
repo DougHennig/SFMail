@@ -21,7 +21,7 @@ namespace SMTPLibraryCore
         /// <summary>
         /// The mail server address.
         /// </summary>
-        public string MailServer { get; set; }
+        public string MailServer { get; set; } = string.Empty;
 
         /// <summary>
         /// The port to use.
@@ -31,52 +31,52 @@ namespace SMTPLibraryCore
         /// <summary>
         /// The email address for the sender.
         /// </summary>
-        public string SenderEmail { get; set; }
+        public string SenderEmail { get; set; } = string.Empty;
 
         /// <summary>
         /// The name of the sender.
         /// </summary>
-        public string SenderName { get; set; }
+        public string SenderName { get; set; } = string.Empty;
 
         /// <summary>
         /// A semi-colon delimited list of recipients.
         /// </summary>
-        public string Recipients { get; set; }
+        public string Recipients { get; set; } = string.Empty;
 
         /// <summary>
         /// A semi-colon delimited list of CC recipients.
         /// </summary>
-        public string CCRecipients { get; set; }
+        public string CCRecipients { get; set; } = string.Empty;
 
         /// <summary>
         /// A semi-colon delimited list of BCC recipients.
         /// </summary>
-        public string BCCRecipients { get; set; }
+        public string BCCRecipients { get; set; } = string.Empty;
 
         /// <summary>
         /// A semi-colon delimited list of Reply To addresses.
         /// </summary>
-        public string ReplyTo { get; set; }
+        public string ReplyTo { get; set; } = string.Empty;
 
         /// <summary>
         /// The subject.
         /// </summary>
-        public string Subject { get; set; }
+        public string Subject { get; set; } = string.Empty;
 
         /// <summary>
         /// The body of the message.
         /// </summary>
-        public string Message { get; set; }
+        public string Message { get; set; } = string.Empty;
 
         /// <summary>
         /// The user name for the server.
         /// </summary>
-        public string UserName { get; set; }
+        public string UserName { get; set; } = string.Empty;
 
         /// <summary>
         /// The password for the server.
         /// </summary>
-        public string Password { get; set; }
+        public string Password { get; set; } = string.Empty;
 
         /// <summary>
         /// True if the body contains HTML.
@@ -91,7 +91,7 @@ namespace SMTPLibraryCore
         /// <summary>
         /// An OAuth2 authentication object.
         /// </summary>
-        public SaslMechanism OAuthenticate { get; set; }
+        public SaslMechanism? OAuthenticate { get; set; }
 
         /// <summary>
         /// The timeout in seconds.
@@ -101,7 +101,7 @@ namespace SMTPLibraryCore
         /// <summary>
         /// The name of a log file to write to.
         /// </summary>
-        public string LogFile { get; set; }
+        public string LogFile { get; set; } = string.Empty;
 
         /// <summary>
         /// A list of attachments.
@@ -114,13 +114,13 @@ namespace SMTPLibraryCore
         /// See https://docs.microsoft.com/en-us/exchange/client-developer/legacy-protocols/how-to-authenticate-an-imap-pop-smtp-application-by-using-oauth
         /// for details.
         /// </summary>
-        public string ClientId { get; set; }
+        public string ClientId { get; set; } = string.Empty;
 
         /// <summary>
         /// MFA Tenant ID. Required if ClientId is set.
         /// Gets or sets the unique identifier of the tenant associated with the current context.
         /// </summary>
-        public string TenantId { get; set; }
+        public string TenantId { get; set; } = string.Empty;
 
         /// <summary>
         /// The constructor.
@@ -242,7 +242,7 @@ namespace SMTPLibraryCore
                 // https://unop.uk/advanced-email-sending-with-.net-core-and-mailkit/ for a more advanced guide
                 SecureSocketOptions value = (SecureSocketOptions)SecurityOptions;
                 // See https://github.com/jstedfast/MailKit/blob/master/FAQ.md#ssl-handshake-exception for why setting SslProtocols
-                client.SslProtocols = SslProtocols.Ssl3 | SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
+                client.SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
 
                 // Connect to the server.
                 client.Timeout = Timeout * 1000;

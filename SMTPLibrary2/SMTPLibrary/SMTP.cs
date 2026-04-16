@@ -16,7 +16,7 @@ namespace SMTPLibrary2
         /// <summary>
         /// The mail server address.
         /// </summary>
-        public string MailServer { get; set; }
+        public string MailServer { get; set; } = string.Empty;
 
         /// <summary>
         /// The port to use.
@@ -26,52 +26,52 @@ namespace SMTPLibrary2
         /// <summary>
         /// The email address for the sender.
         /// </summary>
-        public string SenderEmail { get; set; }
+        public string SenderEmail { get; set; } = string.Empty;
 
         /// <summary>
         /// The name of the sender.
         /// </summary>
-        public string SenderName { get; set; }
+        public string SenderName { get; set; } = string.Empty;
 
         /// <summary>
         /// A semi-colon delimited list of recipients.
         /// </summary>
-        public string Recipients { get; set; }
+        public string Recipients { get; set; } = string.Empty;
 
         /// <summary>
         /// A semi-colon delimited list of CC recipients.
         /// </summary>
-        public string CCRecipients { get; set; }
+        public string CCRecipients { get; set; } = string.Empty;
 
         /// <summary>
         /// A semi-colon delimited list of BCC recipients.
         /// </summary>
-        public string BCCRecipients { get; set; }
+        public string BCCRecipients { get; set; } = string.Empty;
 
         /// <summary>
         /// A semi-colon delimited list of Reply To addresses.
         /// </summary>
-        public string ReplyTo { get; set; }
+        public string ReplyTo { get; set; } = string.Empty;
 
         /// <summary>
         /// The subject.
         /// </summary>
-        public string Subject { get; set; }
+        public string Subject { get; set; } = string.Empty;
 
         /// <summary>
         /// The body of the message.
         /// </summary>
-        public string Message { get; set; }
+        public string Message { get; set; } = string.Empty;
 
         /// <summary>
         /// The user name for the server.
         /// </summary>
-        public string UserName { get; set; }
+        public string UserName { get; set; } = string.Empty;
 
         /// <summary>
         /// The password for the server.
         /// </summary>
-        public string Password { get; set; }
+        public string Password { get; set; } = string.Empty;
 
         /// <summary>
         /// True if the body contains HTML.
@@ -96,7 +96,7 @@ namespace SMTPLibrary2
         /// <summary>
         /// The name of a log file to write to.
         /// </summary>
-        public string LogFile { get; set; }
+        public string LogFile { get; set; } = string.Empty;
 
         /// <summary>
         /// A list of attachments.
@@ -194,7 +194,7 @@ namespace SMTPLibrary2
                 // https://unop.uk/advanced-email-sending-with-.net-core-and-mailkit/ for a more advanced guide
                 SecureSocketOptions value = (SecureSocketOptions)SecurityOptions;
                 // See https://github.com/jstedfast/MailKit/blob/master/FAQ.md#ssl-handshake-exception for why setting SslProtocols
-                client.SslProtocols = SslProtocols.Ssl3 | SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
+                client.SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
 
                 // Connect to the server.
                 client.Timeout = Timeout * 1000;
