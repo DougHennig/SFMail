@@ -10,6 +10,7 @@ using System.Security.Authentication;
 using Microsoft.Identity.Client;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.Identity.Client.Extensions.Msal;
 
 namespace SMTPLibraryCore
 {
@@ -142,6 +143,11 @@ namespace SMTPLibraryCore
 
             if (!string.IsNullOrWhiteSpace(ClientId))
             {
+                var storageProperties = new StorageCreationPropertiesBuilder("msal.cache", ".\\")
+                    .WithLinuxUnprotectedFile()
+                    .WithMacKeyChain("com.myapp.cache", "account")
+                    .Build();
+
                 // 1. Initialize MSAL for interactive login (supports MFA)
                 string[] scopes = ["https://outlook.office.com/SMTP.Send", "offline_access"];
                 var app = PublicClientApplicationBuilder.Create(ClientId)
@@ -149,12 +155,24 @@ namespace SMTPLibraryCore
                     .WithRedirectUri("http://localhost")
                     .Build();
 
+                // This line handles the disk loading and saving automatically
+                // Storage Registration: The MsalCacheHelper hooks into MSAL’s internal events.
+                // When you call an acquisition method, it automatically reads from the specified
+                // file (msal.cache).
+                var cacheHelper = await MsalCacheHelper.CreateAsync(storageProperties);
+                cacheHelper.RegisterCache(app.UserTokenCache);
+
                 // 2. Acquire Access Token
                 AuthenticationResult result;
                 try
                 {
                     // 1. Try to get token silently from the cache
+                    // Account Discovery: GetAccountsAsync() triggers the helper to load existing user
+                    // profiles from the disk into the application's memory.
                     var accounts = await app.GetAccountsAsync();
+                    //Automatic Refresh: If the cached access token is expired but a refresh token is
+                    //available in the file, AcquireTokenSilent will automatically use it to get a new access
+                    //token without prompting the user.
                     result = await app.AcquireTokenSilent(scopes, accounts.FirstOrDefault())
                         .ExecuteAsync();
                 }
@@ -164,34 +182,23 @@ namespace SMTPLibraryCore
                     // This will open a browser window for the user to complete MFA
                     result = await app.AcquireTokenInteractive(scopes)
                         .ExecuteAsync();
+                    // Persistence: After a successful interactive login, the AfterAccess event
+                    // triggers the helper to encrypt and save the new tokens back to the disk.
+                    // MS sample: https://github.com/Azure-Samples/ms-identity-dotnet-desktop-tutorial/blob/master/2-TokenCache/README.md
                 }
                 string accessToken = result.AccessToken;
                 OAuthenticate = new SaslMechanismOAuth2(UserName, accessToken);
             }
             // Create a mail message.
-            MimeMessage message = new MimeMessage();
+            using MimeMessage message = new MimeMessage();
 
-            // Handle addresses.
+            // Handle addresses. Every list is optional except Recipients, so each one is null checked;
+            // previously only ReplyTo was, and leaving CCRecipients unset threw NullReferenceException.
             message.From.Add(new MailboxAddress(SenderName, SenderEmail));
-            foreach (string address in Recipients.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                message.To.Add(new MailboxAddress("", address.Trim()));
-            }
-            foreach (string address in CCRecipients.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                message.Cc.Add(new MailboxAddress("", address.Trim()));
-            }
-            foreach (string address in BCCRecipients.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                message.Bcc.Add(new MailboxAddress("", address.Trim()));
-            }
-            if (!string.IsNullOrEmpty(ReplyTo))
-            {
-                foreach (string address in ReplyTo.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    message.ReplyTo.Add(new MailboxAddress("", address.Trim()));
-                }
-            }
+            AddAddresses(message.To, Recipients);
+            AddAddresses(message.Cc, CCRecipients);
+            AddAddresses(message.Bcc, BCCRecipients);
+            AddAddresses(message.ReplyTo, ReplyTo);
 
             // Set up the subject, body, and attachments.
             message.Subject = Subject;
@@ -266,6 +273,22 @@ namespace SMTPLibraryCore
             }
             client.Dispose();
             return true;
+        }
+
+        /// <summary>
+        /// Add a semi-colon delimited address list to one of the message address lists.
+        /// Does nothing when the list is null or empty.
+        /// </summary>
+        private static void AddAddresses(InternetAddressList list, string? addresses)
+        {
+            if (string.IsNullOrWhiteSpace(addresses))
+            {
+                return;
+            }
+            foreach (string address in addresses.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                list.Add(new MailboxAddress("", address.Trim()));
+            }
         }
 
         /// <summary>

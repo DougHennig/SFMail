@@ -63,7 +63,7 @@ define class SFMail as Custom
 	cOAuthClientID     = ''				&& The OAuth client ID
 	cOAuthScope        = ''				&& The OAuth scope
 	cOAuthClientSecret = ''				&& The OAuth client secret
-	cVersion           = '2026.02.06'	&& The version number
+	cVersion           = '2026.08.24'	&& The version number
 
 *==============================================================================
 * Method:			SendMail
@@ -215,7 +215,6 @@ define class SFMail as Custom
 				if not file('SMTPLibrary2.dll')
 					lcPath = .GetAppFolder()
 				endif not file('SMTPLibrary2.dll')
-*lcPath = 'C:\Development\VFPX\Mail\SMTPLibrary2\SMTPLibrary\bin\Debug\'
 				loBridge.LoadAssembly(lcPath + 'SMTPLibrary2.dll')
 
 * If we succeeded, instantiate the SMTP class and set its properties.

@@ -125,25 +125,10 @@ namespace SMTPLibrary2
 
             // Handle addresses.
             message.From.Add(new MailboxAddress(SenderName, SenderEmail));
-            foreach (string address in Recipients.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                message.To.Add(new MailboxAddress("", address.Trim()));
-            }
-            foreach (string address in CCRecipients.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                message.Cc.Add(new MailboxAddress("", address.Trim()));
-            }
-            foreach (string address in BCCRecipients.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                message.Bcc.Add(new MailboxAddress("", address.Trim()));
-            }
-            if (!string.IsNullOrEmpty(ReplyTo))
-            {
-                foreach (string address in ReplyTo.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    message.ReplyTo.Add(new MailboxAddress("", address.Trim()));
-                }
-            }
+            AddAddresses(message.To, Recipients);
+            AddAddresses(message.Cc, CCRecipients);
+            AddAddresses(message.Bcc, BCCRecipients);
+            AddAddresses(message.ReplyTo, ReplyTo);
 
             // Set up the subject, body, and attachments.
             message.Subject = Subject;
@@ -217,7 +202,24 @@ namespace SMTPLibrary2
                 client.Disconnect(true);
             }
             client.Dispose();
+            message.Dispose();
             return true;
+        }
+
+        /// <summary>
+        /// Add a semi-colon delimited address list to one of the message address lists.
+        /// Does nothing when the list is null or empty.
+        /// </summary>
+        private static void AddAddresses(InternetAddressList list, string addresses)
+        {
+            if (string.IsNullOrWhiteSpace(addresses))
+            {
+                return;
+            }
+            foreach (string address in addresses.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                list.Add(new MailboxAddress("", address.Trim()));
+            }
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 AppName    = SFMail
 AppID      = SFMail
-Version    = 2026.04.09
+Version    = 2026.08.24
 Component  = Yes
 ChangeLog  = ChangeLog.md
 Repository = https://github.com/DougHennig/SFMail

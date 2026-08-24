@@ -4,6 +4,10 @@ SFMail provides the ability to send emails from VFP applications, including supp
 
 ## Release history
 
+### 2026-08-24: version 2026.08.24
+
+* kobruleht fixed some issues with both the regular and MFA versions of SFMail, resulting in updated SMTPLibrary2.dll and SMTPLibraryCore.dll.
+
 ### 2026-04-09: version 2026.04.09
 
 * Thanks to kobruleht, SFMail now supports multi-factor authentication using different copies of SFMail.prg, SMTPLibraryCore.dll, wwDotNetBridge.dll, and ClrHost.dll (all in the MFA folder).

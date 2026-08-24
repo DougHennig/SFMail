@@ -3,8 +3,8 @@ lparameters toUpdateObject
 * Set the properties of the passed updater object.
 
 with toUpdateObject
-	.VersionNumber    = '2026.04.09 - 20260410'
-	.AvailableVersion = 'SFMail-2026.04.09-update-20260410'
+	.VersionNumber    = '2026.08.24 - 20260824'
+	.AvailableVersion = 'SFMail-2026.08.24-update-20260824'
 	.Notes            = GetNotes()
 	.RegisterWithThor = GetRegisterWithThor()
 endwith
@@ -20,6 +20,10 @@ text to lcNotes noshow
 SFMail provides the ability to send emails from VFP applications, including support for modern authentication.
 
 ## Release history
+
+### 2026-08-24: version 2026.08.24
+
+* kobruleht fixed some issues with both the regular and MFA versions of SFMail, resulting in updated SMTPLibrary2.dll and SMTPLibraryCore.dll.
 
 ### 2026-04-09: version 2026.04.09
 
