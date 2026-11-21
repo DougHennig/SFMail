@@ -158,7 +158,22 @@ namespace SMTPLibrary2
                     }
                 }
             }
-            message.Body = builder.ToMessageBody();
+			if (UseHtml)
+			{
+				message.Body = builder.ToMessageBody();
+			}
+			else
+			{
+				var body = new TextPart("plain")
+				{
+					Text = Message
+				};
+
+				body.ContentType.Charset = "UTF-8";
+				body.ContentTransferEncoding = ContentEncoding.SevenBit;
+
+				message.Body = body;
+			}
 
             // Send the message.
             SmtpClient client;
@@ -198,6 +213,7 @@ namespace SMTPLibrary2
                 }
 
                 // Send the message.
+				message.WriteTo(@"C:\Projects\SFMail\teste.eml");
                 client.Send(message);
                 client.Disconnect(true);
             }
