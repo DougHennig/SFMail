@@ -63,7 +63,7 @@ define class SFMail as Custom
 	cOAuthClientID     = ''				&& The OAuth client ID
 	cOAuthScope        = ''				&& The OAuth scope
 	cOAuthClientSecret = ''				&& The OAuth client secret
-	cVersion           = '2026.08.24'	&& The version number
+	cVersion           = '2026.11.20'	&& The version number
 
 *==============================================================================
 * Method:			SendMail

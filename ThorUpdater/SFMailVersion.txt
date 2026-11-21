@@ -3,8 +3,8 @@ lparameters toUpdateObject
 * Set the properties of the passed updater object.
 
 with toUpdateObject
-	.VersionNumber    = '2026.08.24 - 20260824'
-	.AvailableVersion = 'SFMail-2026.08.24-update-20260824'
+	.VersionNumber    = '2026.11.20 - 20261120'
+	.AvailableVersion = 'SFMail-2026.11.20-update-20261120'
 	.Notes            = GetNotes()
 	.RegisterWithThor = GetRegisterWithThor()
 endwith
@@ -20,6 +20,10 @@ text to lcNotes noshow
 SFMail provides the ability to send emails from VFP applications, including support for modern authentication.
 
 ## Release history
+
+### 2026-11-20: version 2026.11.20
+
+* Fixed plain text email messages to explicitly use UTF-8 charset and 7bit content transfer encoding.
 
 ### 2026-08-24: version 2026.08.24
 
