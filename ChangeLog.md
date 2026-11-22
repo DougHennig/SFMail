@@ -4,6 +4,10 @@ SFMail provides the ability to send emails from VFP applications, including supp
 
 ## Release history
 
+### 2026-11-20: version 2026.11.20
+
+* Fixed plain text email messages to explicitly use UTF-8 charset and 7bit content transfer encoding.
+
 ### 2026-08-24: version 2026.08.24
 
 * kobruleht fixed some issues with both the regular and MFA versions of SFMail, resulting in updated SMTPLibrary2.dll and SMTPLibraryCore.dll.
