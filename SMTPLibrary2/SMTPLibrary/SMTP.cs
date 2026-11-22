@@ -213,7 +213,6 @@ namespace SMTPLibrary2
                 }
 
                 // Send the message.
-				message.WriteTo(@"C:\Projects\SFMail\teste.eml");
                 client.Send(message);
                 client.Disconnect(true);
             }
